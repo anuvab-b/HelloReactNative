@@ -1,21 +1,53 @@
 import React, { useState } from "react";
-import { ScrollView, Text, StyleSheet, TextInput } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  useColorScheme,
+} from "react-native";
 export default function WelcomeScreen() {
   const [firstName, onChangeFirstName] = useState("");
+  const colorScheme = useColorScheme();
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.headerText}>Welcome to Little Lemon</Text>
-      <Text style={styles.regularText}>
+    <ScrollView
+      style={[
+        styles.container,
+        colorScheme === "light"
+          ? { backgroundColor: "#fff" }
+          : { backgroundColor: "#333333" },
+      ]}
+    >
+      <View style={styles.headerWrapper}>
+        <Image
+          style={styles.image}
+          source={require("../assets/logo.png")}
+          resizeMode="cover"
+          accessible={true}
+          accessibilityLabel={"Little Lemon Logo"}
+        />
+        <Text
+          style={[
+            styles.headerText,
+            colorScheme === "light"
+              ? { color: "#333333" }
+              : { color: "#EDEFEE" },
+          ]}
+        >
+          Little Lemon
+        </Text>
+      </View>
+      <Text
+        style={[
+          styles.regularText,
+          colorScheme === "light" ? { color: "#333333" } : { color: "#EDEFEE" },
+        ]}
+      >
         Little Lemon is a charming neighborhood bistro that serves simple food
         and classic cocktails in a lively but casual environment. We would love
         to hear your experience with us!
       </Text>
-      <TextInput
-        style={styles.inputBox}
-        value={firstName}
-        onChangeText={onChangeFirstName}
-        placeholder={"First Name"}
-      />
     </ScrollView>
   );
 }
@@ -24,8 +56,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  headerWrapper: {
+    flexDirection: "row",
+    justifyContent: "center",
+    margin: 10,
+  },
   headerText: {
-    padding: 40,
+    padding: 10,
+    paddingLeft: 20,
+    paddingTop: 30,
+    paddingBottom: 10,
     fontSize: 30,
     color: "#EDEFEE",
     textAlign: "center",
@@ -37,13 +77,9 @@ const styles = StyleSheet.create({
     color: "#EDEFEE",
     textAlign: "center",
   },
-  inputBox: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    fontSize: 16,
-    borderColor: "#EDEFEE",
-    backgroundColor: "#EDEFEE",
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 20,
   },
 });

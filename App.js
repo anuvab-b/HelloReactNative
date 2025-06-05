@@ -17,6 +17,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useEffect, useState } from "react";
+import menuItems from "./menuitems.json";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -24,6 +25,9 @@ const Drawer = createDrawerNavigator();
 export default function App() {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const { menu } = menuItems;
+  // Or you can use
+  // const menu = menuItems.menu
 
   const getMenu = async () => {
     try {
@@ -71,15 +75,11 @@ export default function App() {
   return (
     <SafeAreaView style={menuStyles.container}>
       <Text style={menuStyles.headerText} Little Lemon></Text>
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <FlatList
-          data={data}
-          keyExtractor={({ id }, index) => id}
-          renderItem={renderItem}
-        />
-      )}
+      <FlatList
+        data={menu}
+        keyExtractor={({ id }) => id}
+        renderItem={renderItem}
+      />
     </SafeAreaView>
   );
 }
